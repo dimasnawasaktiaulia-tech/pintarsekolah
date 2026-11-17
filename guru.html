@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Guru | PintarSekolah</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,sans-serif;
+ background:#f4f7fc;color:#17233d
+}
+header{
+ background:#fff;padding:18px 6%;
+ display:flex;justify-content:space-between;
+ align-items:center;border-bottom:1px solid #e7ebf2
+}
+.logo{font-size:22px;font-weight:800;color:#2457d6}
+.logo span{color:#17233d}
+.tag{background:#eaf0ff;color:#2457d6;
+ padding:8px 12px;border-radius:20px;font-size:12px}
+main{max-width:950px;margin:35px auto;padding:0 18px}
+.hero{
+ background:linear-gradient(120deg,#1748bd,#3978f0);
+ color:white;padding:30px;border-radius:18px;
+ margin-bottom:25px
+}
+.hero h1{margin:0 0 10px;font-size:28px}
+.hero p{margin:0;line-height:1.6;color:#e6edff}
+.card{
+ background:white;padding:25px;border-radius:16px;
+ margin-bottom:20px;box-shadow:0 4px 18px #17233d0b
+}
+h2{font-size:19px;margin:0 0 20px}
+label{display:block;font-weight:600;margin:15px 0 8px}
+input,select,textarea{
+ width:100%;padding:13px;border:1px solid #dce2ec;
+ border-radius:9px;font-size:15px;background:#fff;
+ color:#17233d
+}
+textarea{min-height:155px;resize:vertical;line-height:1.6}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.upload{
+ border:2px dashed #b9c9e8;border-radius:12px;
+ padding:25px;text-align:center;background:#f8faff
+}
+.upload p{color:#66748a;font-size:13px}
+button{
+ border:0;border-radius:10px;padding:14px 20px;
+ font-size:15px;font-weight:700;cursor:pointer
+}
+.primary{background:#245bd7;color:white;width:100%;margin-top:20px}
+.primary:hover{background:#1748bd}
+.secondary{background:#eaf0ff;color:#2457d6}
+.note{
+ background:#fff8e6;color:#805b13;padding:14px;
+ border-radius:10px;font-size:13px;line-height:1.6
+}
+#result{
+ display:none;background:#f0f7ff;border:1px solid #c9ddff;
+ border-radius:12px;padding:18px;margin-top:20px
+}
+footer{text-align:center;padding:30px;color:#8490a3;font-size:12px}
+@media(max-width:600px){
+ .grid{grid-template-columns:1fr}
+ .hero h1{font-size:23px}
+ .card{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">Pintar<span>Sekolah</span></div>
+ <div class="tag">Dashboard Guru</div>
+</header>
+
+<main>
+ <section class="hero">
+  <h1>Halo, Bapak/Ibu Guru! 👋</h1>
+  <p>Buat latihan soal dengan lebih mudah.
+  Masukkan rangkuman atau unggah dokumen materi
+  untuk mempersiapkan soal bagi siswa.</p>
+ </section>
+
+ <section class="card">
+  <h2>📚 Informasi Pelajaran</h2>
+
+  <label>Jenjang pendidikan</label>
+  <select id="level" onchange="updateClasses()">
+   <option value="SD">SD</option>
+   <option value="SMP">SMP</option>
+   <option value="SMA">SMA</option>
+   <option value="SMK">SMK</option>
+  </select>
+
+  <div class="grid">
+   <div>
+    <label>Kelas</label>
+    <select id="grade"></select>
+   </div>
+   <div>
+    <label>Mata pelajaran</label>
+    <input id="subject" placeholder="Contoh: Matematika">
+   </div>
+  </div>
+
+  <label>Nama bab atau materi</label>
+  <input id="chapter" placeholder="Contoh: Bab 2 Sistem Pencernaan">
+ </section>
+
+ <section class="card">
+  <h2>📝 Masukkan Materi</h2>
+
+  <label>Tempel rangkuman materi</label>
+  <textarea id="summary" placeholder="Tempel rangkuman materi pelajaran di sini..."></textarea>
+
+  <p style="text-align:center;color:#8793a5">— ATAU —</p>
+
+  <label>Unggah dokumen materi</label>
+  <div class="upload">
+   <div style="font-size:35px">📄</div>
+   <strong>Pilih dokumen dari perangkat</strong>
+   <p>Format PDF, DOCX, atau TXT</p>
+   <input type="file" id="file"
+    accept=".pdf,.docx,.txt">
+   <p id="fileName">Belum ada dokumen dipilih</p>
+  </div>
+ </section>
+
+ <section class="card">
+  <h2>⚙️ Pengaturan Soal</h2>
+
+  <div class="grid">
+   <div>
+    <label>Jumlah soal</label>
+    <select id="count">
+     <option value="5">5 soal</option>
+     <option value="10" selected>10 soal</option>
+     <option value="15">15 soal</option>
+     <option value="20">20 soal</option>
+    </select>
+   </div>
+
+   <div>
+    <label>Jenis soal</label>
+    <select id="type">
+     <option>Pilihan ganda</option>
+     <option>Benar atau salah</option>
+     <option>Isian singkat</option>
+     <option>Campuran</option>
+    </select>
+   </div>
+  </div>
+
+  <label>Tingkat kesulitan</label>
+  <select id="difficulty">
+   <option>Mudah</option>
+   <option selected>Menengah</option>
+   <option>Sulit</option>
+   <option>Campuran</option>
+  </select>
+
+  <div class="note" style="margin-top:20px">
+   💡 Soal nantinya harus disesuaikan dengan jenjang,
+   kelas, mata pelajaran, dan materi yang diberikan guru.
+   Guru wajib memeriksa soal sebelum diterbitkan.
+  </div>
+
+  <button class="primary" onclick="generate()">
+   ✨ Persiapkan Pembuatan Soal
+  </button>
+
+  <div id="result">
+   <h3>Informasi soal</h3>
+   <div id="details"></div>
+   <p class="note">
+    Dashboard berhasil menerima pengaturan materi.
+    AI belum terhubung. Tahap berikutnya adalah
+    memasang layanan AI dan pembaca dokumen.
+   </p>
+  </div>
+ </section>
+</main>
+
+<footer>
+ © 2026 PintarSekolah · Belajar Jadi Lebih Mudah
+</footer>
+
+<script>
+function updateClasses(){
+ const level=document.getElementById("level").value;
+ const grade=document.getElementById("grade");
+ let classes=[];
+
+ if(level==="SD") classes=[1,2,3,4,5,6];
+ else if(level==="SMP") classes=[7,8,9];
+ else classes=[10,11,12];
+
+ grade.innerHTML=classes.map(n=>
+  `<option value="${n}">Kelas ${n}</option>`
+ ).join("");
+}
+updateClasses();
+
+document.getElementById("file").addEventListener("change",function(){
+ const file=this.files[0];
+ document.getElementById("fileName").textContent=
+ file ? "Dokumen dipilih: "+file.name : "Belum ada dokumen dipilih";
+});
+
+function generate(){
+ const summary=document.getElementById("summary").value.trim();
+ const file=document.getElementById("file").files[0];
+
+ if(!summary&&!file){
+  alert("Masukkan rangkuman atau pilih dokumen terlebih dahulu.");
+  return;
+ }
+
+ const level=document.getElementById("level").value;
+ const grade=document.getElementById("grade").value;
+ const subject=document.getElementById("subject").value.trim();
+ const chapter=document.getElementById("chapter").value.trim();
+
+ if(!subject||!chapter){
+  alert("Isi mata pelajaran dan nama bab terlebih dahulu.");
+  return;
+ }
+
+ const details=document.getElementById("details");
+ details.textContent=
+ "Jenjang: "+level+
+ " | Kelas: "+grade+
+ " | Mata pelajaran: "+subject+
+ " | Materi: "+chapter+
+ " | Jumlah: "+document.getElementById("count").value+
+ " | Jenis: "+document.getElementById("type").value+
+ " | Kesulitan: "+document.getElementById("difficulty").value;
+
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>
