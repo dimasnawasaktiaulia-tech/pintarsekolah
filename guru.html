@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guru - PintarSekolah</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fc;
+  color:#17243b;
+}
+header{
+  background:#fff;
+  padding:18px 7%;
+  border-bottom:1px solid #e5eaf2;
+  font-size:22px;
+  font-weight:bold;
+  color:#2457d6;
+}
+main{max-width:850px;margin:35px auto;padding:0 18px}
+.card{
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 5px 25px #17243b0c;
+}
+h1{margin-top:0;font-size:27px}
+p{color:#64748b;line-height:1.6}
+label{
+  display:block;
+  font-weight:bold;
+  margin:20px 0 8px;
+}
+input,select,textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #d7deea;
+  border-radius:9px;
+  font-size:15px;
+  background:white;
+}
+textarea{min-height:170px;resize:vertical}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+button{
+  width:100%;
+  margin-top:23px;
+  padding:15px;
+  border:0;
+  border-radius:9px;
+  background:#2457d6;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{background:#1946b8}
+.note{
+  margin-top:15px;
+  padding:13px;
+  border-radius:9px;
+  background:#eff5ff;
+  color:#31538e;
+  font-size:13px;
+  line-height:1.5;
+}
+#hasil{
+  display:none;
+  margin-top:20px;
+  padding:17px;
+  border:1px solid #dce5f2;
+  border-radius:10px;
+  line-height:1.7;
+  overflow-wrap:anywhere;
+}
+@media(max-width:550px){
+  .grid{grid-template-columns:1fr}
+  .card{padding:19px}
+}
+</style>
+</head>
+<body>
+
+<header>🎓 PintarSekolah</header>
+
+<main>
+<div class="card">
+<h1>Buat Soal Pembelajaran</h1>
+<p>Masukkan materi dan tentukan jumlah soal sesuai kebutuhan pembelajaran.</p>
+
+<label>Jenjang pendidikan</label>
+<select id="jenjang" onchange="ubahKelas()">
+<option value="SD">SD</option>
+<option value="SMP">SMP</option>
+<option value="SMA" selected>SMA</option>
+<option value="SMK">SMK</option>
+</select>
+
+<label>Kelas</label>
+<select id="kelas"></select>
+
+<label>Mata pelajaran</label>
+<input id="mapel" placeholder="Contoh: PJOK">
+
+<label>Bab atau judul materi</label>
+<input id="bab" placeholder="Contoh: Permainan Bola Kasti">
+
+<label>Masukkan ringkasan materi</label>
+<textarea id="materi" placeholder="Tempelkan materi pembelajaran di sini..."></textarea>
+
+<label>Atau unggah dokumen</label>
+<input id="dokumen" type="file" accept=".pdf,.docx,.txt">
+
+<div class="grid">
+<div>
+<label>Jumlah pilihan ganda</label>
+<input id="pg" type="number" min="0" step="1" value="40" placeholder="Contoh: 40">
+</div>
+<div>
+<label>Jumlah soal esai</label>
+<input id="esai" type="number" min="0" step="1" value="10" placeholder="Contoh: 10">
+</div>
+</div>
+
+<label>Tingkat kesulitan</label>
+<select id="kesulitan">
+<option>Mudah</option>
+<option>Sedang</option>
+<option>Sulit</option>
+<option selected>Campuran</option>
+</select>
+
+<div class="note">
+Jumlah soal bebas ditentukan guru. Pastikan materi sesuai dengan jenjang dan kelas yang dipilih.
+</div>
+
+<button onclick="persiapkanSoal()">Persiapkan Pembuatan Soal</button>
+
+<div id="hasil"></div>
+</div>
+</main>
+
+<script>
+function ubahKelas(){
+  const jenjang=document.getElementById("jenjang").value;
+  const kelas=document.getElementById("kelas");
+  const jumlah=jenjang==="SD"?6:jenjang==="SMP"?3:3;
+  const awal=jenjang==="SD"?1:jenjang==="SMP"?7:10;
+  kelas.innerHTML="";
+  for(let i=0;i<jumlah;i++){
+    const angka=awal+i;
+    kelas.innerHTML+=`<option value="${angka}">Kelas ${angka}</option>`;
+  }
+}
+ubahKelas();
+
+function persiapkanSoal(){
+  const jenjang=document.getElementById("jenjang").value;
+  const kelas=document.getElementById("kelas").value;
+  const mapel=document.getElementById("mapel").value.trim();
+  const bab=document.getElementById("bab").value.trim();
+  const materi=document.getElementById("materi").value.trim();
+  const file=document.getElementById("dokumen").files[0];
+  const pg=document.getElementById("pg").value;
+  const esai=document.getElementById("esai").value;
+  const kesulitan=document.getElementById("kesulitan").value;
+  const hasil=document.getElementById("hasil");
+
+  if(!mapel||!bab){
+    alert("Isi mata pelajaran dan judul materi terlebih dahulu.");
+    return;
+  }
+
+  if(!materi&&!file){
+    alert("Masukkan materi atau unggah dokumen terlebih dahulu.");
+    return;
+  }
+
+  if(pg===""||esai===""||
+     !Number.isSafeInteger(Number(pg))||
+     !Number.isSafeInteger(Number(esai))||
+     Number(pg)<0||Number(esai)<0||
+     Number(pg)+Number(esai)===0){
+    alert("Masukkan jumlah soal berupa bilangan bulat. Minimal satu soal.");
+    return;
+  }
+
+  hasil.style.display="block";
+  hasil.innerHTML=`
+    <h3>Persiapan soal berhasil!</h3>
+    <b>Jenjang:</b> ${jenjang}<br>
+    <b>Kelas:</b> ${kelas}<br>
+    <b>Mata pelajaran:</b> ${mapel}<br>
+    <b>Materi:</b> ${bab}<br>
+    <b>Pilihan ganda:</b> ${Number(pg)} soal<br>
+    <b>Esai:</b> ${Number(esai)} soal<br>
+    <b>Total:</b> ${Number(pg)+Number(esai)} soal<br>
+    <b>Kesulitan:</b> ${kesulitan}<br>
+    <b>Sumber materi:</b> ${file ? "Dokumen: "+file.name : "Teks yang ditempel"}<br>
+    <p>Pengaturan sudah siap. Fitur ini belum terhubung ke AI, sehingga soal belum dibuat.</p>
+  `;
+}
+</script>
+
+</body>
+</html>
