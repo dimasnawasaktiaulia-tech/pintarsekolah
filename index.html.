@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PintarSekolah - Belajar Lebih Mudah</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: white;
+      padding: 15px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #3157d5;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: #3157d5;
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    nav button {
+      border: none;
+      background: transparent;
+      padding: 10px;
+      color: #69758c;
+      white-space: nowrap;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    nav button:hover,
+    nav button.active {
+      background: #edf1ff;
+      color: #3157d5;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #2447bd, #5a7cf0);
+      color: white;
+      border-radius: 25px;
+      padding: 40px 25px;
+      margin-bottom: 30px;
+    }
+
+    .hero small {
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin: 15px 0;
+    }
+
+    .hero p {
+      max-width: 600px;
+      line-height: 1.7;
+      color: #e7ecff;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      background: #3157d5;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero .button {
+      background: white;
+      color: #3157d5;
+    }
+
+    .section-title {
+      margin-bottom: 15px;
+    }
+
+    .section-title h2 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .section-title p {
+      color: #77829a;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e6eaf2;
+      border-radius: 17px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(20,40,80,0.05);
+    }
+
+    .feature {
+      cursor: pointer;
+      text-align: left;
+      border: 1px solid #e6eaf2;
+    }
+
+    .feature:hover {
+      border-color: #9eafff;
+      transform: translateY(-2px);
+    }
+
+    .icon {
+      width: 45px;
+      height: 45px;
+      background: #edf1ff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 13px;
+    }
+
+    .feature h3 {
+      margin-bottom: 7px;
+    }
+
+    .feature p {
+      color: #77829a;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .page-title {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .page-description {
+      color: #77829a;
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #dce1eb;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #3157d5;
+    }
+
+    textarea {
+      min-height: 200px;
+      resize: vertical;
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #edf4ff;
+      color: #2342ae;
+      display: none;
+      line-height: 1.7;
+    }
+
+    .result strong {
+      font-size: 30px;
+    }
+
+    .schedule {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #e7eaf0;
+      padding: 15px 0;
+    }
+
+    .schedule h4 {
+      margin-bottom: 5px;
+    }
+
+    .schedule p {
+      color: #77829a;
+      font-size: 13px;
+    }
+
+    .delete {
+      border: none;
+      background: #fff0f0;
+      color: #c33;
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .answer {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin-top: 10px;
+      padding: 14px;
+      background: white;
+      border: 1px solid #e0e4ec;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .answer:hover {
+      border-color: #3157d5;
+      background: #f5f7ff;
+    }
+
+    .correct {
+      background: #e7f8ee !important;
+      border-color: #55b77d !important;
+    }
+
+    .wrong {
+      background: #fff0f0 !important;
+      border-color: #dd8888 !important;
+    }
+
+    .muted {
+      color: #77829a;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 15px;
+      color: #77829a;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 650px) {
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .container {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="navbar">
+
+    <div class="logo">
+      <div class="logo-icon">P</div>
+      PintarSekolah
+    </div>
+
+    <nav>
+
+      <button class="active" onclick="showPage('home')">
+        Beranda
+      </button>
+
+      <button onclick="showPage('nilai')">
+        Kalkulator
+      </button>
+
+      <button onclick="showPage('jadwal')">
+        Jadwal
+      </button>
+
+      <button onclick="showPage('soal')">
+        Bank Soal
+      </button>
+
+      <button onclick="showPage('catatan')">
+        Catatan
+      </button>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- BERANDA -->
+
+<section id="home" class="page active">
+
+  <div class="hero">
+
+    <small>PLATFORM BELAJAR GRATIS</small>
+
+    <h1>
+      Belajar lebih mudah,
+      raih masa depanmu.
+    </h1>
+
+    <p>
+      PintarSekolah membantu pelajar Indonesia
+      belajar lebih teratur dengan berbagai
+      alat belajar gratis.
+    </p>
+
+    <button class="button" onclick="showPage('nilai')">
+      Mulai Belajar →
+    </button>
+
+  </div>
+
+
+  <div class="section-title">
+
+    <h2>Fitur PintarSekolah</h2>
+
+    <p>
+      Semua alat belajar dalam satu tempat.
+    </p>
+
+  </div>
+
+
+  <div class="grid">
+
+    <button class="card feature"
+      onclick="showPage('nilai')">
+
+      <div class="icon">🧮</div>
+
+      <h3>Kalkulator Nilai</h3>
+
+      <p>
+        Hitung nilai akhir tugas,
+        UTS, dan UAS.
+      </p>
+
+    </button>
+
+
+    <button class="card feature"
+      onclick="showPage('jadwal')">
+
+      <div class="icon">📅</div>
+
+      <h3>Jadwal Belajar</h3>
+
+      <p>
+        Atur jadwal belajar
+        agar lebih teratur.
+      </p>
+
+    </button>
+
+
+    <button class="card feature"
+      onclick="showPage('soal')">
+
+      <div class="icon">📝</div>
+
+      <h3>Bank Soal</h3>
+
+      <p>
+        Latih kemampuanmu
+        dengan soal latihan.
+      </p>
+
+    </button>
+
+
+    <button class="card feature"
+      onclick="showPage('catatan')">
+
+      <div class="icon">📚</div>
+
+      <h3>Catatan Belajar</h3>
+
+      <p>
+        Simpan rangkuman
+        pelajaranmu.
+      </p>
+
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- KALKULATOR NILAI -->
+
+<section id="nilai" class="page">
+
+  <h1 class="page-title">
+    Kalkulator Nilai
+  </h1>
+
+  <p class="page-description">
+    Masukkan nilai tugas, UTS, dan UAS
+    untuk menghitung nilai akhir.
+  </p>
+
+
+  <div class="card">
+
+    <div class="form-group">
+
+      <label>
+        Nilai Tugas (30%)
+      </label>
+
+      <input
+        id="tugas"
+        type="number"
+        min="0"
+        max="100"
+        placeholder="Contoh: 85"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Nilai UTS (30%)
+      </label>
+
+      <input
+        id="uts"
+        type="number"
+        min="0"
+        max="100"
+        placeholder="Contoh: 80"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Nilai UAS (40%)
+      </label>
+
+      <input
+        id="uas"
+        type="number"
+        min="0"
+        max="100"
+        placeholder="Contoh: 90"
+      >
+
+    </div>
+
+
+    <button
+      class="button"
+      onclick="hitungNilai()">
+
+      Hitung Nilai
+
+    </button>
+
+
+    <div
+      id="hasilNilai"
+      class="result">
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- JADWAL -->
+
+<section id="jadwal" class="page">
+
+  <h1 class="page-title">
+    Jadwal Belajar
+  </h1>
+
+  <p class="page-description">
+    Buat jadwal belajar dan simpan
+    di perangkatmu.
+  </p>
+
+
+  <div class="card">
+
+    <div class="form-group">
+
+      <label>
+        Pelajaran
+      </label>
+
+      <input
+        id="pelajaran"
+        placeholder="Contoh: Matematika"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Tanggal
+      </label>
+
+      <input
+        id="tanggal"
+        type="date"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Waktu
+      </label>
+
+      <input
+        id="waktu"
+        type="time"
+      >
+
+    </div>
+
+
+    <button
+      class="button"
+      onclick="tambahJadwal()">
+
+      + Tambah Jadwal
+
+    </button>
+
+  </div>
+
+
+  <br>
+
+
+  <div class="card">
+
+    <h3>
+      Jadwal Saya
+    </h3>
+
+    <div id="daftarJadwal">
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- BANK SOAL -->
+
+<section id="soal" class="page">
+
+  <h1 class="page-title">
+    Bank Soal
+  </h1>
+
+  <p class="page-description">
+    Uji kemampuanmu dengan soal
+    latihan pengetahuan umum.
+  </p>
+
+
+  <div class="card">
+
+    <div id="quiz">
+
+      <div class="icon">
+        📝
+      </div>
+
+      <h3>
+        Siap belajar?
+      </h3>
+
+      <p class="muted">
+        Tersedia 5 soal latihan.
+      </p>
+
+      <br>
+
+      <button
+        class="button"
+        onclick="mulaiQuiz()">
+
+        Mulai Latihan
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- CATATAN -->
+
+<section id="catatan" class="page">
+
+  <h1 class="page-title">
+    Catatan Belajar
+  </h1>
+
+  <p class="page-description">
+    Tulis materi atau rangkuman
+    pelajaranmu.
+  </p>
+
+
+  <div class="card">
+
+    <label>
+      Catatan
+    </label>
+
+    <br>
+
+    <textarea
+      id="catatanText"
+      placeholder="Tulis catatan belajar di sini..."
+    ></textarea>
+
+    <br><br>
+
+    <button
+      class="button"
+      onclick="simpanCatatan()">
+
+      Simpan Catatan
+
+    </button>
+
+    <p
+      id="statusCatatan"
+      class="muted">
+    </p>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+  <strong>PintarSekolah</strong>
+
+  <br>
+
+  Belajar gratis untuk masa depan Indonesia.
+
+  <br>
+
+  © 2026 PintarSekolah
+
+</footer>
+
+
+
+<script>
+
+/* =========================
+   PINDAH HALAMAN
+========================= */
+
+function showPage(pageId) {
+
+  const pages =
+    document.querySelectorAll(".page");
+
+  pages.forEach(function(page) {
+
+    page.classList.remove("active");
+
+  });
+
+
+  document
+    .getElementById(pageId)
+    .classList.add("active");
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =========================
+   KALKULATOR NILAI
+========================= */
+
+function hitungNilai() {
+
+  const tugas =
+    Number(document.getElementById("tugas").value);
+
+  const uts =
+    Number(document.getElementById("uts").value);
+
+  const uas =
+    Number(document.getElementById("uas").value);
+
+
+  if (
+    tugas < 0 ||
+    tugas > 100 ||
+    uts < 0 ||
+    uts > 100 ||
+    uas < 0 ||
+    uas > 100
+  ) {
+
+    alert("Masukkan nilai antara 0 sampai 100.");
+
+    return;
+
+  }
+
+
+  const hasil =
+    (tugas * 0.30) +
+    (uts * 0.30) +
+    (uas * 0.40);
+
+
+  const box =
+    document.getElementById("hasilNilai");
+
+
+  box.style.display = "block";
+
+
+  box.innerHTML =
+
+    "Nilai akhir kamu:<br>" +
+
+    "<strong>" +
+    hasil.toFixed(2) +
+    "</strong><br>" +
+
+    (
+      hasil >= 75
+      ? "🎉 Bagus! Pertahankan prestasimu!"
+      : "💪 Jangan menyerah. Terus belajar!"
+    );
+
+}
+
+
+
+/* =========================
+   JADWAL BELAJAR
+========================= */
+
+let jadwal =
+  JSON.parse(
+    localStorage.getItem("jadwalPintarSekolah")
+  ) || [];
+
+
+function tampilkanJadwal() {
+
+  const container =
+    document.getElementById("daftarJadwal");
+
+
+  if (jadwal.length === 0) {
+
+    container.innerHTML =
+      "<p class='muted'>Belum ada jadwal.</p>";
+
+    return;
+
+  }
+
+
+  container.innerHTML = "";
+
+
+  jadwal.forEach(function(item, index) {
+
+    const div =
+      document.createElement("div");
+
+
+    div.className = "schedule";
+
+
+    div.innerHTML =
+
+      "<div>" +
+
+      "<h4>" +
+      item.pelajaran +
+      "</h4>" +
+
+      "<p>" +
+      item.tanggal +
+      " • " +
+      item.waktu +
+      "</p>" +
+
+      "</div>" +
+
+      "<button class='delete' " +
+      "onclick='hapusJadwal(" +
+      index +
+      ")'>" +
+
+      "Hapus" +
+
+      "</button>";
+
+
+    container.appendChild(div);
+
+  });
+
+}
+
+
+function tambahJadwal() {
+
+  const pelajaran =
+    document.getElementById("pelajaran").value;
+
+  const tanggal =
+    document.getElementById("tanggal").value;
+
+  const waktu =
+    document.getElementById("waktu").value;
+
+
+  if (
+    pelajaran === "" ||
+    tanggal === "" ||
+    waktu === ""
+  ) {
+
+    alert("Lengkapi semua data.");
+
+    return;
+
+  }
+
+
+  jadwal.push({
+
+    pelajaran:
+      pelajaran,
+
+    tanggal:
+      tanggal,
+
+    waktu:
+      waktu
+
+  });
+
+
+  localStorage.setItem(
+    "jadwalPintarSekolah",
+    JSON.stringify(jadwal)
+  );
+
+
+  document.getElementById("pelajaran").value = "";
+
+  document.getElementById("tanggal").value = "";
+
+  document.getElementById("waktu").value = "";
+
+
+  tampilkanJadwal();
+
+}
+
+
+function hapusJadwal(index) {
+
+  jadwal.splice(index, 1);
+
+
+  localStorage.setItem(
+    "jadwalPintarSekolah",
+    JSON.stringify(jadwal)
+  );
+
+
+  tampilkanJadwal();
+
+}
+
+
+tampilkanJadwal();
+
+
+
+/* =========================
+   BANK SOAL
+========================= */
+
+const soal = [
+
+  {
+    pertanyaan:
+      "Berapakah hasil dari 12 × 8?",
+
+    pilihan:
+      ["86", "96", "108", "88"],
+
+    jawaban: 1
+  },
+
+
+  {
+    pertanyaan:
+      "Planet yang dikenal sebagai Planet Merah adalah?",
+
+    pilihan:
+      ["Venus", "Mars", "Jupiter", "Saturnus"],
+
+    jawaban: 1
+  },
+
+
+  {
+    pertanyaan:
+      "Berapakah hasil dari 100 ÷ 4?",
+
+    pilihan:
+      ["20", "25", "30", "40"],
+
+    jawaban: 1
+  },
+
+
+  {
+    pertanyaan:
+      "Proses tumbuhan membuat makanan disebut?",
+
+    pilihan:
+      [
+        "Respirasi",
+        "Evaporasi",
+        "Fotosintesis",
+        "Adaptasi"
+      ],
+
+    jawaban: 2
+  },
+
+
+  {
+    pertanyaan:
+      "Berapakah hasil dari 15 + 25?",
+
+    pilihan:
+      ["30", "35", "40", "45"],
+
+    jawaban: 2
+  }
+
+];
+
+
+let nomorSoal = 0;
+
+let skor = 0;
+
+
+function mulaiQuiz() {
+
+  nomorSoal = 0;
+
+  skor = 0;
+
+  tampilkanSoal();
+
+}
+
+
+function tampilkanSoal() {
+
+  const quiz =
+    document.getElementById("quiz");
+
+
+  const item =
+    soal[nomorSoal];
+
+
+  quiz.innerHTML =
+
+    "<p class='muted'>" +
+
+    "Soal " +
+    (nomorSoal + 1) +
+    " dari " +
+    soal.length +
+
+    "</p>" +
+
+    "<h3>" +
+
+    item.pertanyaan +
+
+    "</h3>" +
+
+    "<div id='pilihan'></div>";
+
+
+  const pilihan =
+    document.getElementById("pilihan");
+
+
+  item.pilihan.forEach(
+    function(jawaban, index) {
+
+      const button =
+        document.createElement("button");
+
+
+      button.className =
+        "answer";
+
+
+      button.textContent =
+        jawaban;
+
+
+      button.onclick =
+        function() {
+
+          cekJawaban(index);
+
+        };
+
+
+      pilihan.appendChild(button);
+
+    }
+  );
+
+}
+
+
+function cekJawaban(index) {
+
+  const item =
+    soal[nomorSoal];
+
+
+  const buttons =
+    document.querySelectorAll(".answer");
+
+
+  buttons.forEach(
+    function(button) {
+
+      button.disabled = true;
+
+    }
+  );
+
+
+  if (index === item.jawaban) {
+
+    buttons[index]
+      .classList.add("correct");
+
+    skor++;
+
+  } else {
+
+    buttons[index]
+      .classList.add("wrong");
+
+    buttons[item.jawaban]
+      .classList.add("correct");
+
+  }
+
+
+  setTimeout(
+    function() {
+
+      nomorSoal++;
+
+
+      if (
+        nomorSoal < soal.length
+      ) {
+
+        tampilkanSoal();
+
+      } else {
+
+        tampilkanHasilQuiz();
+
+      }
+
+    },
+
+    1000
+  );
+
+}
+
+
+function tampilkanHasilQuiz() {
+
+  const quiz =
+    document.getElementById("quiz");
+
+
+  quiz.innerHTML =
+
+    "<div class='icon'>🏆</div>" +
+
+    "<h2>Latihan Selesai!</h2>" +
+
+    "<p class='muted'>" +
+
+    "Skor kamu:" +
+
+    "</p>" +
+
+    "<h1 style='color:#3157d5'>" +
+
+    skor +
+    " / " +
+    soal.length +
+
+    "</h1>" +
+
+    "<br>" +
+
+    "<button class='button' " +
+    "onclick='mulaiQuiz()'>" +
+
+    "Ulangi Latihan" +
+
+    "</button>";
+
+}
+
+
+
+/* =========================
+   CATATAN
+========================= */
+
+const catatanText =
+  document.getElementById("catatanText");
+
+
+catatanText.value =
+  localStorage.getItem("catatanPintarSekolah")
+  || "";
+
+
+function simpanCatatan() {
+
+  localStorage.setItem(
+    "catatanPintarSekolah",
+    catatanText.value
+  );
+
+
+  document.getElementById(
+    "statusCatatan"
+  ).textContent =
+    "✅ Catatan berhasil disimpan di perangkat ini.";
+
+}
+
+</script>
+
+</body>
+</html>
