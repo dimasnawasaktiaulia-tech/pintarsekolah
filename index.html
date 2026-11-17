@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3157d5">
+<title>PintarSekolah - Belajar Lebih Mudah</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fc;color:#19233b;font-family:Arial,sans-serif}
+header{background:white;padding:15px;position:sticky;top:0;z-index:5;border-bottom:1px solid #e5e9f2}
+nav{display:flex;gap:7px;overflow-x:auto;margin-top:12px}
+nav button{border:0;padding:10px;background:#edf1ff;color:#3157d5;border-radius:9px;white-space:nowrap}
+.logo{font-size:21px;font-weight:bold;color:#3157d5}
+.container{max-width:950px;margin:25px auto;padding:0 16px}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(120deg,#2447bd,#6383f1);color:white;padding:30px 22px;border-radius:20px;margin-bottom:25px}
+.hero h1{font-size:35px;line-height:1.2}
+.hero p{line-height:1.7;color:#e5eaff}
+.card{background:white;padding:19px;border:1px solid #e5e9f2;border-radius:15px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.feature{border:1px solid #e5e9f2;text-align:left;cursor:pointer}
+.feature:hover{border-color:#3157d5}
+.icon{font-size:26px;margin-bottom:10px}
+.feature p,.muted{color:#77829a;font-size:13px;line-height:1.6}
+h2{font-size:21px}
+input,textarea{width:100%;padding:13px;border:1px solid #dce1eb;border-radius:9px;margin:7px 0 15px;font-size:15px}
+textarea{height:180px}
+label{font-weight:bold;font-size:14px}
+.primary{background:#3157d5;color:white;border:0;padding:12px 17px;border-radius:9px;font-weight:bold}
+.result{display:none;background:#edf3ff;color:#2447bd;padding:16px;margin-top:15px;border-radius:10px}
+.result strong{font-size:30px}
+.item{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding:13px 0;gap:10px}
+.answer{display:block;width:100%;padding:13px;margin-top:9px;text-align:left;background:white;border:1px solid #ddd;border-radius:9px}
+.correct{background:#e5f8ed;border-color:green}
+.wrong{background:#fff0f0;border-color:red}
+footer{text-align:center;color:#77829a;padding:30px;font-size:13px}
+@media(max-width:550px){.grid{grid-template-columns:1fr}.hero h1{font-size:29px}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">📘 PintarSekolah</div>
+<nav>
+<button onclick="show('home')">Beranda</button>
+<button onclick="show('nilai')">Kalkulator</button>
+<button onclick="show('jadwal')">Jadwal</button>
+<button onclick="show('soal')">Bank Soal</button>
+<button onclick="show('catatan')">Catatan</button>
+</nav>
+</header>
+
+<main class="container">
+<section id="home" class="page active">
+<div class="hero">
+<p>PLATFORM BELAJAR GRATIS</p>
+<h1>Belajar lebih mudah, raih masa depanmu.</h1>
+<p>Tempat belajar gratis untuk pelajar Indonesia. Gunakan berbagai alat belajar dalam satu website.</p>
+<button class="primary" onclick="show('nilai')">Mulai Belajar →</button>
+</div>
+<h2>Fitur PintarSekolah</h2>
+<div class="grid">
+<button class="card feature" onclick="show('nilai')"><div class="icon">🧮</div><h3>Kalkulator Nilai</h3><p>Hitung nilai akhir tugas, UTS dan UAS.</p></button>
+<button class="card feature" onclick="show('jadwal')"><div class="icon">📅</div><h3>Jadwal Belajar</h3><p>Atur waktu belajar harian.</p></button>
+<button class="card feature" onclick="show('soal')"><div class="icon">📝</div><h3>Bank Soal</h3><p>Latihan soal pengetahuan umum.</p></button>
+<button class="card feature" onclick="show('catatan')"><div class="icon">📚</div><h3>Catatan Belajar</h3><p>Simpan materi pelajaran.</p></button>
+</div>
+</section>
+
+<section id="nilai" class="page">
+<h2>Kalkulator Nilai</h2>
+<p class="muted">Bobot contoh: tugas 30%, UTS 30%, UAS 40%.</p>
+<div class="card">
+<label>Nilai Tugas</label><input id="tugas" type="number" min="0" max="100" placeholder="0-100">
+<label>Nilai UTS</label><input id="uts" type="number" min="0" max="100" placeholder="0-100">
+<label>Nilai UAS</label><input id="uas" type="number" min="0" max="100" placeholder="0-100">
+<button class="primary" onclick="hitung()">Hitung Nilai</button>
+<div class="result" id="hasil"></div>
+</div>
+</section>
+
+<section id="jadwal" class="page">
+<h2>Jadwal Belajar</h2>
+<div class="card">
+<label>Nama Pelajaran</label><input id="pelajaran" placeholder="Contoh: Matematika">
+<label>Tanggal</label><input id="tanggal" type="date">
+<label>Waktu</label><input id="waktu" type="time">
+<button class="primary" onclick="tambah()">Tambah Jadwal</button>
+</div>
+<div class="card"><h3>Jadwal Saya</h3><div id="daftar"></div></div>
+</section>
+
+<section id="soal" class="page">
+<h2>Bank Soal</h2>
+<div class="card" id="quiz">
+<p>Uji kemampuanmu dengan 5 soal latihan.</p>
+<button class="primary" onclick="mulai()">Mulai Latihan</button>
+</div>
+</section>
+
+<section id="catatan" class="page">
+<h2>Catatan Belajar</h2>
+<div class="card">
+<label>Tulis catatanmu</label>
+<textarea id="notes" placeholder="Tulis rangkuman pelajaran di sini..."></textarea>
+<button class="primary" onclick="simpan()">Simpan Catatan</button>
+<p class="muted" id="status"></p>
+</div>
+</section>
+</main>
+
+<footer>
+<strong>PintarSekolah</strong><br>
+Belajar gratis untuk masa depan Indonesia.<br>
+© 2026 PintarSekolah
+</footer>
+
+<script>
+function show(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo(0,0);
+}
+
+function hitung(){
+let a=document.getElementById('tugas').value;
+let b=document.getElementById('uts').value;
+let c=document.getElementById('uas').value;
+if(a===''||b===''||c===''||[a,b,c].some(x=>Number(x)<0||Number(x)>100)){
+alert('Masukkan semua nilai antara 0 sampai 100');return;
+}
+let hasil=Number(a)*.3+Number(b)*.3+Number(c)*.4;
+let box=document.getElementById('hasil');
+box.style.display='block';
+box.innerHTML='Nilai akhir kamu:<br><strong>'+hasil.toFixed(2)+'</strong><br>'+(hasil>=75?'🎉 Bagus! Terus pertahankan!':'💪 Terus semangat belajar!');
+}
+
+let jadwal=[];
+try{jadwal=JSON.parse(localStorage.getItem('psJadwal')||'[]');if(!Array.isArray(jadwal))jadwal=[];}catch(e){jadwal=[];}
+
+function tampilkan(){
+let el=document.getElementById('daftar');
+el.innerHTML='';
+if(jadwal.length===0){el.textContent='Belum ada jadwal belajar.';return;}
+jadwal.forEach((x,i)=>{
+let row=document.createElement('div');
+row.className='item';
+let info=document.createElement('span');
+info.textContent=x.pelajaran+' — '+x.tanggal+' '+x.waktu;
+let del=document.createElement('button');
+del.textContent='Hapus';
+del.className='primary';
+del.onclick=()=>{jadwal.splice(i,1);localStorage.setItem('psJadwal',JSON.stringify(jadwal));tampilkan();};
+row.append(info,del);el.append(row);
+});
+}
+function tambah(){
+let p=document.getElementById('pelajaran').value.trim();
+let t=document.getElementById('tanggal').value;
+let w=document.getElementById('waktu').value;
+if(!p||!t||!w){alert('Lengkapi semua data!');return;}
+jadwal.push({pelajaran:p,tanggal:t,waktu:w});
+localStorage.setItem('psJadwal',JSON.stringify(jadwal));
+document.getElementById('pelajaran').value='';
+document.getElementById('tanggal').value='';
+document.getElementById('waktu').value='';
+tampilkan();
+}
+tampilkan();
+
+const soal=[
+{q:'Berapakah 12 × 8?',o:['86','96','108','88'],a:1},
+{q:'Planet Merah adalah?',o:['Venus','Mars','Jupiter','Saturnus'],a:1},
+{q:'Berapakah 100 ÷ 4?',o:['20','25','30','40'],a:1},
+{q:'Proses tumbuhan membuat makanan?',o:['Respirasi','Evaporasi','Fotosintesis','Adaptasi'],a:2},
+{q:'Berapakah 15 + 25?',o:['30','35','40','45'],a:2}
+];
+let nomor=0,skor=0;
+function mulai(){nomor=0;skor=0;tampilSoal();}
+function tampilSoal(){
+let q=soal[nomor],el=document.getElementById('quiz');
+el.innerHTML='<p class="muted">Soal '+(nomor+1)+' dari '+soal.length+'</p><h3>'+q.q+'</h3><div id="opsi"></div><p id="pesan"></p>';
+q.o.forEach((x,i)=>{
+let btn=document.createElement('button');
+btn.className='answer';btn.textContent=x;
+btn.onclick=()=>{
+document.querySelectorAll('.answer').forEach(b=>b.disabled=true);
+if(i===q.a){skor++;btn.classList.add('correct');document.getElementById('pesan').textContent='Benar! 🎉';}
+else{btn.classList.add('wrong');document.querySelectorAll('.answer')[q.a].classList.add('correct');document.getElementById('pesan').textContent='Belum tepat. Coba lagi di soal berikutnya!';}
+let next=document.createElement('button');next.className='primary';next.textContent=nomor===soal.length-1?'Lihat Hasil':'Soal Berikutnya';
+next.onclick=()=>{nomor++;if(nomor<soal.length)tampilSoal();else hasilQuiz();};
+el.append(next);
+};
+document.getElementById('opsi').append(btn);
+});
+}
+function hasilQuiz(){
+document.getElementById('quiz').innerHTML='<h2>Latihan selesai!</h2><h1>'+skor+' / '+soal.length+'</h1><p class="muted">Terus berlatih agar semakin pintar!</p><button class="primary" onclick="mulai()">Ulangi</button>';
+}
+
+let notes=document.getElementById('notes');
+notes.value=localStorage.getItem('psCatatan')||'';
+function simpan(){
+localStorage.setItem('psCatatan',notes.value);
+document.getElementById('status').textContent='Catatan berhasil disimpan di perangkat ini!';
+}
+</script>
+</body>
+</html>
